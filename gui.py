@@ -68,3 +68,25 @@ class CurrencyConverter:
         self.root.mainloop()
         pass
 
+    def validate_amount(self, P, d, i, S, V, W) -> bool:
+        if len(P) > 3:
+            return False
+        # check if input is a number
+        if P.isdigit():
+            return False
+        # check if input is a letter
+        if P.isalpha():
+            # check if input is made of uppercase letters
+            if P.isupper():
+                # check if input is a valid currency code
+                if CurrencyCodes().get_symbol(P) is None:
+                    return False
+                else:
+                    return True
+            else:
+                return False
+        else :
+            return False
+if __name__ == "__main__":
+    CurrencyConverter().run()
+    pass
