@@ -76,17 +76,11 @@ class CurrencyConverter:
             return False
         # check if input is a letter
         if P.isalpha():
-            # check if input is made of uppercase letters
             if P.isupper():
-                # check if input is a valid currency code
-                if CurrencyCodes().get_symbol(P) is None:
-                    return False
-                else:
-                    return True
+                return True
             else:
                 return False
-        else :
-            return False
+        return True
 if __name__ == "__main__":
     CurrencyConverter().run()
     pass
