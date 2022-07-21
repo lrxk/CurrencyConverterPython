@@ -17,8 +17,6 @@ class CurrencyConverter:
         self.invert_button = tk.Button(self.root, text="Invert", font="Arial 12", bg="white", command=self.invert)
         self.invert_button.grid(row=5, column=0, columnspan=2, padx=10, pady=10)
 
-        
-        
         pass
     def invert(self) -> None:
         self.from_currency = self.from_currency_entry.get()
