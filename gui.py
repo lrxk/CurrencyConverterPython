@@ -96,7 +96,7 @@ class CurrencyConverter:
                 return False
         return True
     def validate_amount(self, P) -> bool:
-        if P.isdigit() and len(P) >0:
+        if P.isdigit():
             return True
         else:
             return False
