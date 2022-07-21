@@ -47,28 +47,42 @@ class CurrencyConverter:
         self.amount_label = tk.Label(self.root, text="Amount:", font="Arial 12", bg="white")
         self.amount_label.grid(row=0, column=0, padx=10, pady=10)
         self.amount_entry = tk.Entry(self.root, font="Arial 12", width=10)
-        
-        
+        self.amount_entry.grid(row=0, column=1, padx=10, pady=10)        
+        # check that the input is a number
+        self.amount_entry.configure(validate="key", validatecommand=(self.amount_entry.register(self.validate_amount), '%P'))
         self.from_currency_label = tk.Label(self.root, text="From:", font="Arial 12", bg="white")
         self.from_currency_label.grid(row=1, column=0, padx=10, pady=10)
         self.from_currency_entry = tk.Entry(self.root, font="Arial 12", width=10)
         # entry must be uppercase letters only and have max 3 letters
-        self.from_currency_entry.configure(validate="key", validatecommand=(self.root.register(self.validate_amount), '%P', '%d', '%i', '%S', '%V', '%W'))
+        self.from_currency_entry.configure(validate="key", validatecommand=(self.root.register(self.validate_currency), '%P', '%d', '%i', '%S', '%V', '%W'))
         self.from_currency_entry.grid(row=1, column=1, padx=10, pady=10)
         self.to_currency_label = tk.Label(self.root, text="To:", font="Arial 12", bg="white")
         self.to_currency_label.grid(row=2, column=0, padx=10, pady=10)
         # entry must be uppercase letters only and have max 3 letters
         self.to_currency_entry = tk.Entry(self.root, font="Arial 12", width=10)
-        self.to_currency_entry.configure(validate="key", validatecommand=(self.root.register(self.validate_amount), '%P', '%d', '%i', '%S', '%V', '%W'))
+        self.var = tk.StringVar(self.root)
+        try:
+        # python 3.6
+            self.var.trace_add('write', self.to_uppercase)
+        except AttributeError:
+            # print "Error"
+            print("Error")
+            pass
+        self.to_currency_entry.configure(validate="key", validatecommand=(self.root.register(self.validate_currency), '%P', '%d', '%i', '%S', '%V', '%W'))
         self.to_currency_entry.grid(row=2, column=1, padx=10, pady=10)
+        
         self.result_label = tk.Label(self.root, text="Result:", font="Arial 12", bg="white")
         self.result_label.grid(row=3, column=0, padx=10, pady=10)
         self.result_label = tk.Label(self.root, text="0.00", font="Arial 12", bg="white")
         self.result_label.grid(row=3, column=1, padx=10, pady=10)
         self.root.mainloop()
+
         pass
 
-    def validate_amount(self, P, d, i, S, V, W) -> bool:
+    def to_uppercase(self, *args) -> None:
+        self.var.set(self.var.get().upper())
+    def validate_currency(self, P, d, i, S, V, W) -> bool:
+        
         if len(P) > 3:
             return False
         # check if input is a number
@@ -81,6 +95,11 @@ class CurrencyConverter:
             else:
                 return False
         return True
+    def validate_amount(self, P) -> bool:
+        if P.isdigit() and len(P) >0:
+            return True
+        else:
+            return False
 if __name__ == "__main__":
     CurrencyConverter().run()
     pass
