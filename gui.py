@@ -99,6 +99,8 @@ class CurrencyConverter:
         if P.isdigit():
             return True
         else:
+            if len(P)==0:
+                return True
             return False
 if __name__ == "__main__":
     CurrencyConverter().run()
